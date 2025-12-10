@@ -1,0 +1,3096 @@
+{
+  "openapi": "3.1.0",
+  "info": { "title": "Tractor Parts IMS", "version": "0.1.0" },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Login",
+        "operationId": "login_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_login_auth_login_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Token" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Register User",
+        "operationId": "register_user_auth_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Token" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        },
+        "security": [{ "OAuth2PasswordBearer": [] }]
+      }
+    },
+    "/categories/": {
+      "get": {
+        "tags": ["categories"],
+        "summary": "List Categories",
+        "operationId": "list_categories_categories__get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/CategoryOut" },
+                  "title": "Response List Categories Categories  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["categories"],
+        "summary": "Create Category",
+        "operationId": "create_category_categories__post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CategoryCreate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CategoryOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/{category_id}": {
+      "get": {
+        "tags": ["categories"],
+        "summary": "Get Category",
+        "operationId": "get_category_categories__category_id__get",
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Category Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CategoryOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["categories"],
+        "summary": "Update Category",
+        "operationId": "update_category_categories__category_id__put",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Category Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CategoryUpdate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CategoryOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["categories"],
+        "summary": "Delete Category",
+        "operationId": "delete_category_categories__category_id__delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "category_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Category Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CategoryOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tractor-models/": {
+      "get": {
+        "tags": ["tractor-models"],
+        "summary": "List Models",
+        "operationId": "list_models_tractor_models__get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 0, "title": "Offset" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/TractorModelOut" },
+                  "title": "Response List Models Tractor Models  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["tractor-models"],
+        "summary": "Create Model",
+        "operationId": "create_model_tractor_models__post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/TractorModelCreate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TractorModelOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tractor-models/{model_id}": {
+      "get": {
+        "tags": ["tractor-models"],
+        "summary": "Get Model",
+        "operationId": "get_model_tractor_models__model_id__get",
+        "parameters": [
+          {
+            "name": "model_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Model Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TractorModelOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["tractor-models"],
+        "summary": "Update Model",
+        "operationId": "update_model_tractor_models__model_id__put",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "model_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Model Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/TractorModelUpdate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TractorModelOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["tractor-models"],
+        "summary": "Delete Model",
+        "operationId": "delete_model_tractor_models__model_id__delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "model_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Model Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TractorModelOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/suppliers/": {
+      "get": {
+        "tags": ["suppliers"],
+        "summary": "List Suppliers",
+        "operationId": "list_suppliers_suppliers__get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 0, "title": "Offset" }
+          },
+          {
+            "name": "is_active",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+              "title": "Is Active"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/SupplierOut" },
+                  "title": "Response List Suppliers Suppliers  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["suppliers"],
+        "summary": "Create Supplier",
+        "operationId": "create_supplier_suppliers__post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SupplierCreate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SupplierOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/suppliers/{supplier_id}": {
+      "get": {
+        "tags": ["suppliers"],
+        "summary": "Get Supplier",
+        "operationId": "get_supplier_suppliers__supplier_id__get",
+        "parameters": [
+          {
+            "name": "supplier_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Supplier Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SupplierOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["suppliers"],
+        "summary": "Update Supplier",
+        "operationId": "update_supplier_suppliers__supplier_id__put",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "supplier_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Supplier Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SupplierUpdate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SupplierOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["suppliers"],
+        "summary": "Delete Supplier",
+        "operationId": "delete_supplier_suppliers__supplier_id__delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "supplier_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Supplier Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SupplierOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/": {
+      "get": {
+        "tags": ["customers"],
+        "summary": "List Customers",
+        "operationId": "list_customers_customers__get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 0, "title": "Offset" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/CustomerOut" },
+                  "title": "Response List Customers Customers  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["customers"],
+        "summary": "Create Customer",
+        "operationId": "create_customer_customers__post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CustomerCreate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CustomerOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/{customer_id}": {
+      "get": {
+        "tags": ["customers"],
+        "summary": "Get Customer",
+        "operationId": "get_customer_customers__customer_id__get",
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Customer Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CustomerOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["customers"],
+        "summary": "Update Customer",
+        "operationId": "update_customer_customers__customer_id__put",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Customer Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CustomerUpdate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CustomerOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["customers"],
+        "summary": "Delete Customer",
+        "operationId": "delete_customer_customers__customer_id__delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "customer_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Customer Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CustomerOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/parts/": {
+      "get": {
+        "tags": ["parts"],
+        "summary": "List Parts",
+        "operationId": "list_parts_parts__get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          },
+          {
+            "name": "category_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "integer" }, { "type": "null" }],
+              "title": "Category Id"
+            }
+          },
+          {
+            "name": "supplier_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "integer" }, { "type": "null" }],
+              "title": "Supplier Id"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "tractor_model_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "integer" }, { "type": "null" }],
+              "title": "Tractor Model Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/PartOut" },
+                  "title": "Response List Parts Parts  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["parts"],
+        "summary": "Create Part",
+        "operationId": "create_part_parts__post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PartCreate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PartOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/parts/{part_id}": {
+      "get": {
+        "tags": ["parts"],
+        "summary": "Get Part",
+        "operationId": "get_part_parts__part_id__get",
+        "parameters": [
+          {
+            "name": "part_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Part Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PartOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["parts"],
+        "summary": "Update Part",
+        "operationId": "update_part_parts__part_id__put",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "part_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Part Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PartUpdate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PartOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["parts"],
+        "summary": "Delete Part",
+        "operationId": "delete_part_parts__part_id__delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "part_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Part Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PartOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/parts/by-barcode/{barcode_value}": {
+      "get": {
+        "tags": ["parts"],
+        "summary": "Get Part By Barcode",
+        "operationId": "get_part_by_barcode_parts_by_barcode__barcode_value__get",
+        "parameters": [
+          {
+            "name": "barcode_value",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Barcode Value" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PartOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/parts/{part_id}/suppliers": {
+      "get": {
+        "tags": ["parts"],
+        "summary": "Get Part Suppliers",
+        "operationId": "get_part_suppliers_parts__part_id__suppliers_get",
+        "parameters": [
+          {
+            "name": "part_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Part Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/PartSupplierOut" },
+                  "title": "Response Get Part Suppliers Parts  Part Id  Suppliers Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/parts/{part_id}/suppliers/{supplier_id}": {
+      "post": {
+        "tags": ["parts"],
+        "summary": "Upsert Part Supplier",
+        "operationId": "upsert_part_supplier_parts__part_id__suppliers__supplier_id__post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "part_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Part Id" }
+          },
+          {
+            "name": "supplier_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Supplier Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PartSupplierPayload" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PartSupplierOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["parts"],
+        "summary": "Delete Part Supplier",
+        "operationId": "delete_part_supplier_parts__part_id__suppliers__supplier_id__delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "part_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Part Id" }
+          },
+          {
+            "name": "supplier_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Supplier Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/parts/{part_id}/compatible-models": {
+      "get": {
+        "tags": ["parts"],
+        "summary": "List Compatible Models",
+        "operationId": "list_compatible_models_parts__part_id__compatible_models_get",
+        "parameters": [
+          {
+            "name": "part_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Part Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PartCompatibilityOut"
+                  },
+                  "title": "Response List Compatible Models Parts  Part Id  Compatible Models Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["parts"],
+        "summary": "Add Compatible Model",
+        "operationId": "add_compatible_model_parts__part_id__compatible_models_post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "part_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Part Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PartCompatibilityCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PartCompatibilityOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/parts/{part_id}/compatible-models/{tractor_model_id}": {
+      "delete": {
+        "tags": ["parts"],
+        "summary": "Delete Compatible Model",
+        "operationId": "delete_compatible_model_parts__part_id__compatible_models__tractor_model_id__delete",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "parameters": [
+          {
+            "name": "part_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Part Id" }
+          },
+          {
+            "name": "tractor_model_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Tractor Model Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/purchase-invoices/": {
+      "get": {
+        "tags": ["purchase-invoices"],
+        "summary": "List Purchase Invoices",
+        "operationId": "list_purchase_invoices_purchase_invoices__get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 0, "title": "Offset" }
+          },
+          {
+            "name": "supplier_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "integer" }, { "type": "null" }],
+              "title": "Supplier Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PurchaseInvoiceOut"
+                  },
+                  "title": "Response List Purchase Invoices Purchase Invoices  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["purchase-invoices"],
+        "summary": "Create Purchase Invoice",
+        "operationId": "create_purchase_invoice_purchase_invoices__post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/PurchaseInvoiceCreate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PurchaseInvoiceOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/purchase-invoices/{invoice_id}": {
+      "get": {
+        "tags": ["purchase-invoices"],
+        "summary": "Get Purchase Invoice",
+        "operationId": "get_purchase_invoice_purchase_invoices__invoice_id__get",
+        "parameters": [
+          {
+            "name": "invoice_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Invoice Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PurchaseInvoiceOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sales-invoices/": {
+      "get": {
+        "tags": ["sales-invoices"],
+        "summary": "List Sales Invoices",
+        "operationId": "list_sales_invoices_sales_invoices__get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 0, "title": "Offset" }
+          },
+          {
+            "name": "customer_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "integer" }, { "type": "null" }],
+              "title": "Customer Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/SalesInvoiceOut" },
+                  "title": "Response List Sales Invoices Sales Invoices  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["sales-invoices"],
+        "summary": "Create Sales Invoice",
+        "operationId": "create_sales_invoice_sales_invoices__post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SalesInvoiceCreate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SalesInvoiceOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sales-invoices/{invoice_id}": {
+      "get": {
+        "tags": ["sales-invoices"],
+        "summary": "Get Sales Invoice",
+        "operationId": "get_sales_invoice_sales_invoices__invoice_id__get",
+        "parameters": [
+          {
+            "name": "invoice_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Invoice Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SalesInvoiceOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stock-adjustments/": {
+      "get": {
+        "tags": ["stock-adjustments"],
+        "summary": "List Adjustments",
+        "operationId": "list_adjustments_stock_adjustments__get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 0, "title": "Offset" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StockAdjustmentOut"
+                  },
+                  "title": "Response List Adjustments Stock Adjustments  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["stock-adjustments"],
+        "summary": "Create Adjustment",
+        "operationId": "create_adjustment_stock_adjustments__post",
+        "security": [{ "OAuth2PasswordBearer": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/StockAdjustmentCreate" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/StockAdjustmentOut" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/stock": {
+      "get": {
+        "tags": ["reports"],
+        "summary": "Stock Report",
+        "operationId": "stock_report_reports_stock_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 0, "title": "Offset" }
+          },
+          {
+            "name": "is_active",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+              "title": "Is Active"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/PartOut" },
+                  "title": "Response Stock Report Reports Stock Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/low-stock": {
+      "get": {
+        "tags": ["reports"],
+        "summary": "Low Stock Report",
+        "operationId": "low_stock_report_reports_low_stock_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 0, "title": "Offset" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/PartOut" },
+                  "title": "Response Low Stock Report Reports Low Stock Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_login_auth_login_post": {
+        "properties": {
+          "grant_type": {
+            "anyOf": [
+              { "type": "string", "pattern": "password" },
+              { "type": "null" }
+            ],
+            "title": "Grant Type"
+          },
+          "username": { "type": "string", "title": "Username" },
+          "password": { "type": "string", "title": "Password" },
+          "scope": { "type": "string", "title": "Scope", "default": "" },
+          "client_id": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Client Id"
+          },
+          "client_secret": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Client Secret"
+          }
+        },
+        "type": "object",
+        "required": ["username", "password"],
+        "title": "Body_login_auth_login_post"
+      },
+      "CategoryCreate": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "description": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Description"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": ["name"],
+        "title": "CategoryCreate"
+      },
+      "CategoryOut": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "description": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Description"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "default": true
+          },
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          },
+          "id": { "type": "integer", "title": "Id" }
+        },
+        "type": "object",
+        "required": ["name", "id"],
+        "title": "CategoryOut"
+      },
+      "CategoryUpdate": {
+        "properties": {
+          "name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Name"
+          },
+          "description": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Description"
+          },
+          "is_active": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Is Active"
+          }
+        },
+        "type": "object",
+        "title": "CategoryUpdate"
+      },
+      "CustomerCreate": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "phone": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Phone"
+          },
+          "email": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Email"
+          },
+          "gst_number": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Gst Number"
+          },
+          "address_line1": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Address Line1"
+          },
+          "address_line2": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Address Line2"
+          },
+          "city": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "City"
+          },
+          "state": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "State"
+          },
+          "pincode": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Pincode"
+          },
+          "notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Notes"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": ["name"],
+        "title": "CustomerCreate"
+      },
+      "CustomerOut": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "phone": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Phone"
+          },
+          "email": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Email"
+          },
+          "gst_number": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Gst Number"
+          },
+          "address_line1": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Address Line1"
+          },
+          "address_line2": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Address Line2"
+          },
+          "city": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "City"
+          },
+          "state": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "State"
+          },
+          "pincode": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Pincode"
+          },
+          "notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Notes"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "default": true
+          },
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          },
+          "id": { "type": "integer", "title": "Id" }
+        },
+        "type": "object",
+        "required": ["name", "id"],
+        "title": "CustomerOut"
+      },
+      "CustomerUpdate": {
+        "properties": {
+          "name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Name"
+          },
+          "phone": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Phone"
+          },
+          "email": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Email"
+          },
+          "gst_number": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Gst Number"
+          },
+          "address_line1": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Address Line1"
+          },
+          "address_line2": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Address Line2"
+          },
+          "city": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "City"
+          },
+          "state": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "State"
+          },
+          "pincode": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Pincode"
+          },
+          "notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Notes"
+          },
+          "is_active": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Is Active"
+          }
+        },
+        "type": "object",
+        "title": "CustomerUpdate"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": { "$ref": "#/components/schemas/ValidationError" },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "LoginRequest": {
+        "properties": {
+          "username": { "type": "string", "title": "Username" },
+          "password": { "type": "string", "title": "Password" }
+        },
+        "type": "object",
+        "required": ["username", "password"],
+        "title": "LoginRequest"
+      },
+      "PartCompatibilityCreate": {
+        "properties": {
+          "tractor_model_id": { "type": "integer", "title": "Tractor Model Id" }
+        },
+        "type": "object",
+        "required": ["tractor_model_id"],
+        "title": "PartCompatibilityCreate"
+      },
+      "PartCompatibilityOut": {
+        "properties": {
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          },
+          "id": { "type": "integer", "title": "Id" },
+          "part_id": { "type": "integer", "title": "Part Id" },
+          "tractor_model_id": { "type": "integer", "title": "Tractor Model Id" }
+        },
+        "type": "object",
+        "required": ["id", "part_id", "tractor_model_id"],
+        "title": "PartCompatibilityOut"
+      },
+      "PartCreate": {
+        "properties": {
+          "part_code": { "type": "string", "title": "Part Code" },
+          "name": { "type": "string", "title": "Name" },
+          "category_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Category Id"
+          },
+          "unit_of_measure": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Unit Of Measure"
+          },
+          "purchase_price": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Purchase Price"
+          },
+          "selling_price": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Selling Price"
+          },
+          "mrp": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Mrp"
+          },
+          "tax_rate_percent": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Tax Rate Percent"
+          },
+          "min_stock_level": {
+            "type": "integer",
+            "title": "Min Stock Level",
+            "default": 0
+          },
+          "current_stock": {
+            "type": "integer",
+            "title": "Current Stock",
+            "default": 0
+          },
+          "location_rack": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Location Rack"
+          },
+          "location_shelf": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Location Shelf"
+          },
+          "location_box": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Location Box"
+          },
+          "primary_supplier_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Primary Supplier Id"
+          },
+          "barcode_value": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Barcode Value"
+          },
+          "image_url": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Image Url"
+          },
+          "notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Notes"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "default": true
+          },
+          "suppliers": {
+            "anyOf": [
+              {
+                "items": { "$ref": "#/components/schemas/PartSupplierLink" },
+                "type": "array"
+              },
+              { "type": "null" }
+            ],
+            "title": "Suppliers"
+          }
+        },
+        "type": "object",
+        "required": ["part_code", "name"],
+        "title": "PartCreate"
+      },
+      "PartOut": {
+        "properties": {
+          "part_code": { "type": "string", "title": "Part Code" },
+          "name": { "type": "string", "title": "Name" },
+          "category_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Category Id"
+          },
+          "unit_of_measure": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Unit Of Measure"
+          },
+          "purchase_price": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Purchase Price"
+          },
+          "selling_price": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Selling Price"
+          },
+          "mrp": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Mrp"
+          },
+          "tax_rate_percent": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Tax Rate Percent"
+          },
+          "min_stock_level": {
+            "type": "integer",
+            "title": "Min Stock Level",
+            "default": 0
+          },
+          "current_stock": {
+            "type": "integer",
+            "title": "Current Stock",
+            "default": 0
+          },
+          "location_rack": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Location Rack"
+          },
+          "location_shelf": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Location Shelf"
+          },
+          "location_box": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Location Box"
+          },
+          "primary_supplier_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Primary Supplier Id"
+          },
+          "barcode_value": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Barcode Value"
+          },
+          "image_url": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Image Url"
+          },
+          "notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Notes"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "default": true
+          },
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          },
+          "id": { "type": "integer", "title": "Id" }
+        },
+        "type": "object",
+        "required": ["part_code", "name", "id"],
+        "title": "PartOut"
+      },
+      "PartSupplierLink": {
+        "properties": {
+          "supplier_id": { "type": "integer", "title": "Supplier Id" },
+          "supplier_part_code": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Supplier Part Code"
+          },
+          "last_purchase_price": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Last Purchase Price"
+          },
+          "usual_lead_time_days": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Usual Lead Time Days"
+          },
+          "is_preferred": {
+            "type": "boolean",
+            "title": "Is Preferred",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": ["supplier_id"],
+        "title": "PartSupplierLink"
+      },
+      "PartSupplierOut": {
+        "properties": {
+          "supplier_id": { "type": "integer", "title": "Supplier Id" },
+          "supplier_part_code": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Supplier Part Code"
+          },
+          "last_purchase_price": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Last Purchase Price"
+          },
+          "usual_lead_time_days": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Usual Lead Time Days"
+          },
+          "is_preferred": {
+            "type": "boolean",
+            "title": "Is Preferred",
+            "default": false
+          },
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          },
+          "id": { "type": "integer", "title": "Id" },
+          "part_id": { "type": "integer", "title": "Part Id" }
+        },
+        "type": "object",
+        "required": ["supplier_id", "id", "part_id"],
+        "title": "PartSupplierOut"
+      },
+      "PartSupplierPayload": {
+        "properties": {
+          "supplier_part_code": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Supplier Part Code"
+          },
+          "last_purchase_price": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Last Purchase Price"
+          },
+          "usual_lead_time_days": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Usual Lead Time Days"
+          },
+          "is_preferred": {
+            "type": "boolean",
+            "title": "Is Preferred",
+            "default": false
+          }
+        },
+        "type": "object",
+        "title": "PartSupplierPayload"
+      },
+      "PartUpdate": {
+        "properties": {
+          "part_code": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Part Code"
+          },
+          "name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Name"
+          },
+          "category_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Category Id"
+          },
+          "unit_of_measure": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Unit Of Measure"
+          },
+          "purchase_price": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Purchase Price"
+          },
+          "selling_price": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Selling Price"
+          },
+          "mrp": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Mrp"
+          },
+          "tax_rate_percent": {
+            "anyOf": [{ "type": "number" }, { "type": "null" }],
+            "title": "Tax Rate Percent"
+          },
+          "min_stock_level": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Min Stock Level"
+          },
+          "current_stock": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Current Stock"
+          },
+          "location_rack": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Location Rack"
+          },
+          "location_shelf": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Location Shelf"
+          },
+          "location_box": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Location Box"
+          },
+          "primary_supplier_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Primary Supplier Id"
+          },
+          "barcode_value": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Barcode Value"
+          },
+          "image_url": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Image Url"
+          },
+          "notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Notes"
+          },
+          "is_active": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Is Active"
+          }
+        },
+        "type": "object",
+        "title": "PartUpdate"
+      },
+      "PurchaseInvoiceCreate": {
+        "properties": {
+          "invoice_number": { "type": "string", "title": "Invoice Number" },
+          "invoice_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Invoice Date"
+          },
+          "supplier_id": { "type": "integer", "title": "Supplier Id" },
+          "subtotal": { "type": "number", "title": "Subtotal" },
+          "total_tax": { "type": "number", "title": "Total Tax" },
+          "total_amount": { "type": "number", "title": "Total Amount" },
+          "payment_mode": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Payment Mode"
+          },
+          "payment_status": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Payment Status"
+          },
+          "notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Notes"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PurchaseInvoiceItemCreate"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "invoice_number",
+          "invoice_date",
+          "supplier_id",
+          "subtotal",
+          "total_tax",
+          "total_amount",
+          "items"
+        ],
+        "title": "PurchaseInvoiceCreate"
+      },
+      "PurchaseInvoiceItemCreate": {
+        "properties": {
+          "part_id": { "type": "integer", "title": "Part Id" },
+          "quantity": { "type": "integer", "title": "Quantity" },
+          "unit_price": { "type": "number", "title": "Unit Price" },
+          "discount_amount": {
+            "type": "number",
+            "title": "Discount Amount",
+            "default": 0
+          },
+          "tax_rate_percent": { "type": "number", "title": "Tax Rate Percent" },
+          "tax_amount": {
+            "type": "number",
+            "title": "Tax Amount",
+            "default": 0
+          },
+          "line_total": { "type": "number", "title": "Line Total" }
+        },
+        "type": "object",
+        "required": [
+          "part_id",
+          "quantity",
+          "unit_price",
+          "tax_rate_percent",
+          "line_total"
+        ],
+        "title": "PurchaseInvoiceItemCreate"
+      },
+      "PurchaseInvoiceItemOut": {
+        "properties": {
+          "part_id": { "type": "integer", "title": "Part Id" },
+          "quantity": { "type": "integer", "title": "Quantity" },
+          "unit_price": { "type": "number", "title": "Unit Price" },
+          "discount_amount": {
+            "type": "number",
+            "title": "Discount Amount",
+            "default": 0
+          },
+          "tax_rate_percent": { "type": "number", "title": "Tax Rate Percent" },
+          "tax_amount": {
+            "type": "number",
+            "title": "Tax Amount",
+            "default": 0
+          },
+          "line_total": { "type": "number", "title": "Line Total" },
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          },
+          "id": { "type": "integer", "title": "Id" }
+        },
+        "type": "object",
+        "required": [
+          "part_id",
+          "quantity",
+          "unit_price",
+          "tax_rate_percent",
+          "line_total",
+          "id"
+        ],
+        "title": "PurchaseInvoiceItemOut"
+      },
+      "PurchaseInvoiceOut": {
+        "properties": {
+          "invoice_number": { "type": "string", "title": "Invoice Number" },
+          "invoice_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Invoice Date"
+          },
+          "supplier_id": { "type": "integer", "title": "Supplier Id" },
+          "subtotal": { "type": "number", "title": "Subtotal" },
+          "total_tax": { "type": "number", "title": "Total Tax" },
+          "total_amount": { "type": "number", "title": "Total Amount" },
+          "payment_mode": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Payment Mode"
+          },
+          "payment_status": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Payment Status"
+          },
+          "notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Notes"
+          },
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          },
+          "id": { "type": "integer", "title": "Id" },
+          "items": {
+            "items": { "$ref": "#/components/schemas/PurchaseInvoiceItemOut" },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "invoice_number",
+          "invoice_date",
+          "supplier_id",
+          "subtotal",
+          "total_tax",
+          "total_amount",
+          "id"
+        ],
+        "title": "PurchaseInvoiceOut"
+      },
+      "SalesInvoiceCreate": {
+        "properties": {
+          "invoice_number": { "type": "string", "title": "Invoice Number" },
+          "invoice_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Invoice Date"
+          },
+          "customer_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Customer Id"
+          },
+          "subtotal": { "type": "number", "title": "Subtotal" },
+          "total_tax": { "type": "number", "title": "Total Tax" },
+          "total_amount": { "type": "number", "title": "Total Amount" },
+          "payment_mode": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Payment Mode"
+          },
+          "payment_status": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Payment Status"
+          },
+          "notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Notes"
+          },
+          "items": {
+            "items": { "$ref": "#/components/schemas/SalesInvoiceItemCreate" },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "invoice_number",
+          "invoice_date",
+          "subtotal",
+          "total_tax",
+          "total_amount",
+          "items"
+        ],
+        "title": "SalesInvoiceCreate"
+      },
+      "SalesInvoiceItemCreate": {
+        "properties": {
+          "part_id": { "type": "integer", "title": "Part Id" },
+          "quantity": { "type": "integer", "title": "Quantity" },
+          "unit_price": { "type": "number", "title": "Unit Price" },
+          "discount_amount": {
+            "type": "number",
+            "title": "Discount Amount",
+            "default": 0
+          },
+          "tax_rate_percent": { "type": "number", "title": "Tax Rate Percent" },
+          "tax_amount": {
+            "type": "number",
+            "title": "Tax Amount",
+            "default": 0
+          },
+          "line_total": { "type": "number", "title": "Line Total" }
+        },
+        "type": "object",
+        "required": [
+          "part_id",
+          "quantity",
+          "unit_price",
+          "tax_rate_percent",
+          "line_total"
+        ],
+        "title": "SalesInvoiceItemCreate"
+      },
+      "SalesInvoiceItemOut": {
+        "properties": {
+          "part_id": { "type": "integer", "title": "Part Id" },
+          "quantity": { "type": "integer", "title": "Quantity" },
+          "unit_price": { "type": "number", "title": "Unit Price" },
+          "discount_amount": {
+            "type": "number",
+            "title": "Discount Amount",
+            "default": 0
+          },
+          "tax_rate_percent": { "type": "number", "title": "Tax Rate Percent" },
+          "tax_amount": {
+            "type": "number",
+            "title": "Tax Amount",
+            "default": 0
+          },
+          "line_total": { "type": "number", "title": "Line Total" },
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          },
+          "id": { "type": "integer", "title": "Id" }
+        },
+        "type": "object",
+        "required": [
+          "part_id",
+          "quantity",
+          "unit_price",
+          "tax_rate_percent",
+          "line_total",
+          "id"
+        ],
+        "title": "SalesInvoiceItemOut"
+      },
+      "SalesInvoiceOut": {
+        "properties": {
+          "invoice_number": { "type": "string", "title": "Invoice Number" },
+          "invoice_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Invoice Date"
+          },
+          "customer_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Customer Id"
+          },
+          "subtotal": { "type": "number", "title": "Subtotal" },
+          "total_tax": { "type": "number", "title": "Total Tax" },
+          "total_amount": { "type": "number", "title": "Total Amount" },
+          "payment_mode": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Payment Mode"
+          },
+          "payment_status": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Payment Status"
+          },
+          "notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Notes"
+          },
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          },
+          "id": { "type": "integer", "title": "Id" },
+          "items": {
+            "items": { "$ref": "#/components/schemas/SalesInvoiceItemOut" },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "invoice_number",
+          "invoice_date",
+          "subtotal",
+          "total_tax",
+          "total_amount",
+          "id"
+        ],
+        "title": "SalesInvoiceOut"
+      },
+      "StockAdjustmentCreate": {
+        "properties": {
+          "part_id": { "type": "integer", "title": "Part Id" },
+          "adjustment_type": { "type": "string", "title": "Adjustment Type" },
+          "quantity_change": { "type": "integer", "title": "Quantity Change" },
+          "reason": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": ["part_id", "adjustment_type", "quantity_change"],
+        "title": "StockAdjustmentCreate"
+      },
+      "StockAdjustmentOut": {
+        "properties": {
+          "part_id": { "type": "integer", "title": "Part Id" },
+          "adjustment_type": { "type": "string", "title": "Adjustment Type" },
+          "quantity_change": { "type": "integer", "title": "Quantity Change" },
+          "reason": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Reason"
+          },
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          },
+          "id": { "type": "integer", "title": "Id" },
+          "created_by_user_id": {
+            "type": "integer",
+            "title": "Created By User Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "part_id",
+          "adjustment_type",
+          "quantity_change",
+          "id",
+          "created_by_user_id"
+        ],
+        "title": "StockAdjustmentOut"
+      },
+      "SupplierCreate": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "contact_person": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Contact Person"
+          },
+          "phone": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Phone"
+          },
+          "email": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Email"
+          },
+          "gst_number": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Gst Number"
+          },
+          "address_line1": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Address Line1"
+          },
+          "address_line2": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Address Line2"
+          },
+          "city": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "City"
+          },
+          "state": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "State"
+          },
+          "pincode": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Pincode"
+          },
+          "notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Notes"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": ["name"],
+        "title": "SupplierCreate"
+      },
+      "SupplierOut": {
+        "properties": {
+          "name": { "type": "string", "title": "Name" },
+          "contact_person": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Contact Person"
+          },
+          "phone": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Phone"
+          },
+          "email": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Email"
+          },
+          "gst_number": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Gst Number"
+          },
+          "address_line1": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Address Line1"
+          },
+          "address_line2": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Address Line2"
+          },
+          "city": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "City"
+          },
+          "state": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "State"
+          },
+          "pincode": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Pincode"
+          },
+          "notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Notes"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "default": true
+          },
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          },
+          "id": { "type": "integer", "title": "Id" }
+        },
+        "type": "object",
+        "required": ["name", "id"],
+        "title": "SupplierOut"
+      },
+      "SupplierUpdate": {
+        "properties": {
+          "name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Name"
+          },
+          "contact_person": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Contact Person"
+          },
+          "phone": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Phone"
+          },
+          "email": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Email"
+          },
+          "gst_number": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Gst Number"
+          },
+          "address_line1": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Address Line1"
+          },
+          "address_line2": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Address Line2"
+          },
+          "city": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "City"
+          },
+          "state": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "State"
+          },
+          "pincode": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Pincode"
+          },
+          "notes": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Notes"
+          },
+          "is_active": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Is Active"
+          }
+        },
+        "type": "object",
+        "title": "SupplierUpdate"
+      },
+      "Token": {
+        "properties": {
+          "access_token": { "type": "string", "title": "Access Token" },
+          "token_type": {
+            "type": "string",
+            "title": "Token Type",
+            "default": "bearer"
+          }
+        },
+        "type": "object",
+        "required": ["access_token"],
+        "title": "Token"
+      },
+      "TractorModelCreate": {
+        "properties": {
+          "brand": { "type": "string", "title": "Brand" },
+          "model_name": { "type": "string", "title": "Model Name" },
+          "description": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Description"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": ["brand", "model_name"],
+        "title": "TractorModelCreate"
+      },
+      "TractorModelOut": {
+        "properties": {
+          "created_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Created At"
+          },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          },
+          "brand": { "type": "string", "title": "Brand" },
+          "model_name": { "type": "string", "title": "Model Name" },
+          "description": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Description"
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "default": true
+          },
+          "id": { "type": "integer", "title": "Id" }
+        },
+        "type": "object",
+        "required": ["brand", "model_name", "id"],
+        "title": "TractorModelOut"
+      },
+      "TractorModelUpdate": {
+        "properties": {
+          "brand": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Brand"
+          },
+          "model_name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Model Name"
+          },
+          "description": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Description"
+          },
+          "is_active": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Is Active"
+          }
+        },
+        "type": "object",
+        "title": "TractorModelUpdate"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": { "type": "string", "title": "Message" },
+          "type": { "type": "string", "title": "Error Type" }
+        },
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "OAuth2PasswordBearer": {
+        "type": "oauth2",
+        "flows": { "password": { "scopes": {}, "tokenUrl": "/auth/login" } }
+      }
+    }
+  }
+}
